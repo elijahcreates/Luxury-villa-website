@@ -1,0 +1,7 @@
+# Project files that are not part of the website (never uploaded to Vercel)
+tools/
+scripts/
+photos/
+photo-review/
+*.zip
+README.md

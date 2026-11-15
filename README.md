@@ -6,17 +6,40 @@ domain or hosting, and takes no payments.
 
 ## Preview locally
 
+Requires [Node.js](https://nodejs.org) 18.17 or newer. There are no packages to install.
+
 ```bash
-python3 -m http.server 8080
-# then open http://localhost:8080
+npm run dev
 ```
 
-No build step: plain HTML, CSS and JavaScript.
+Then open **http://localhost:3000**. The page reloads automatically when you save a
+file (CSS changes apply instantly without a reload). Stop the server with `Ctrl+C`.
+Use another port with `PORT=4000 npm run dev`.
+
+## Deploying to Vercel (when approved)
+
+The project is a static site, so Vercel needs no build step; `vercel.json` handles
+the settings. Only the website files are uploaded: `.vercelignore` excludes `tools/`,
+`scripts/`, `photo-review/` and the README.
+
+- **From GitHub:** in Vercel choose *Add New → Project*, import this repository, keep
+  the Framework Preset as **Other**, and deploy.
+- **From the command line:** `npx vercel` (creates a preview URL) and, later,
+  `npx vercel --prod`.
+
+While it's a client preview, search engines are told not to index it
+(`X-Robots-Tag: noindex` in `vercel.json` plus `robots.txt`). **Before the real launch**,
+delete `robots.txt` and remove the `X-Robots-Tag` header.
 
 ## Structure
 
 ```
 index.html            page markup (all sections)
+package.json          npm scripts (dev server)
+scripts/dev-server.mjs  local preview server with live reload
+vercel.json           Vercel settings (static site, headers)
+.vercelignore         files kept out of Vercel deployments
+robots.txt            blocks search engines during the preview phase
 css/styles.css        design system + responsive layout
 js/main.js            nav, gallery, lightbox, booking placeholder
 assets/img/           responsive WebP + JPEG photos (metadata/GPS stripped)
