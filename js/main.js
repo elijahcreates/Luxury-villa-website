@@ -173,7 +173,7 @@ function renderGallery() {
 
   const hidden = list.length - shown.length;
   moreBtn.parentElement.hidden = hidden <= 0 && !(all && expanded);
-  moreBtn.innerHTML = all && expanded ? "Show fewer photos" : `View all ${list.length} photos`;
+  moreBtn.textContent = all && expanded ? "Show fewer photos" : "View all photos";
 }
 
 chips.forEach((chip) => {

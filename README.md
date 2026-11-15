@@ -59,12 +59,13 @@ photo-review/         2 enhancement samples (before/after) for approval
 
 ## Photos
 
-The website currently uses the **original** Google Drive photos, only resized and
-compressed (no tonal changes). The 6 lower-resolution images (about 1200px wide) are
-screenshots in the source folder; the other 20 are full-resolution iPhone photos.
+All 26 photos have been enhanced with `tools/enhance.py`: global, natural corrections
+only (white balance, exposure, gentle contrast, light vibrance and clarity, chroma
+noise reduction, mild sharpening). Nothing is added, removed or reshaped. The 6
+lower-resolution images (about 1200px wide) are screenshots in the source folder; the
+other 20 are full-resolution iPhone photos.
 
-After the enhancement samples in `photo-review/` are approved, apply the same edit to
-all photos and rebuild:
+To rebuild from the source photos (`photos/original/01.jpg` … `26.jpg`, not committed):
 
 ```bash
 mkdir -p photos/enhanced
@@ -73,5 +74,3 @@ for f in photos/original/*.jpg; do
 done
 python3 tools/build_images.py photos/enhanced
 ```
-
-(`photos/` holds the source files named `01.jpg` … `26.jpg` and is not committed.)

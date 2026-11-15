@@ -13,8 +13,10 @@ the set has a consistent look.
                       soft highlight shoulder so windows / lamps don't clip.
   3. Shadows        - small lift of the deepest tones (like a "shadows +" slider).
   4. Contrast       - a gentle S-curve on luminance.
-  5. Noise          - very light chroma-noise reduction (colour speckle only).
-  6. Sharpening     - mild unsharp mask, applied after resizing.
+  5. Vibrance       - small lift for muted colours; rich colours barely change.
+  6. Noise          - very light chroma-noise reduction (colour speckle only).
+  7. Clarity        - gentle large-radius local contrast for depth.
+  8. Sharpening     - mild unsharp mask, applied after resizing.
 
 Usage:
   python3 tools/enhance.py INPUT.jpg OUTPUT.jpg [--max 2400] [--quality 88]
@@ -34,6 +36,8 @@ CONTRAST = 0.16           # S-curve strength
 SHOULDER_START = 0.86     # highlights above this roll off softly
 CHROMA_DENOISE_RADIUS = 1.2
 SHARPEN = dict(radius=1.1, percent=45, threshold=3)
+VIBRANCE = 0.12           # lifts muted colours more than already-rich ones
+CLARITY = 14              # gentle large-radius local contrast (percent)
 
 
 def luminance(a):
@@ -66,7 +70,8 @@ def tone(a):
     med = float(np.median(L))
     # gamma that maps current median -> target median
     g = np.log(TARGET_MEDIAN) / np.log(max(min(med, 0.95), 0.05))
-    g = float(np.clip(g, 1 - MAX_GAMMA_SHIFT, 1 + MAX_GAMMA_SHIFT))
+    # brighten dim photos; never darken already-bright ones (airy is the goal)
+    g = float(np.clip(g, 1 - MAX_GAMMA_SHIFT, 1.04))
     Ln = np.clip(L, 0, None) ** g
     # shadow lift (fades out by mid-grey)
     Ln = Ln + SHADOW_LIFT * (1 - Ln) * np.exp(-Ln * 6)
@@ -85,6 +90,21 @@ def tone(a):
     return out, g, med
 
 
+def vibrance(a):
+    L = luminance(a)[..., None]
+    mx, mn = a.max(axis=2, keepdims=True), a.min(axis=2, keepdims=True)
+    sat = (mx - mn) / np.maximum(mx, 1e-4)
+    out = L + (a - L) * (1 + VIBRANCE * (1 - sat) ** 2)
+    return np.clip(out, 0, 1)
+
+
+def clarity(img):
+    """Large-radius, low-amount unsharp mask: adds depth and separation the way
+    a 'clarity' slider does, without the halos of strong local tone mapping."""
+    radius = max(img.size) / 70
+    return img.filter(ImageFilter.UnsharpMask(radius=radius, percent=CLARITY, threshold=2))
+
+
 def chroma_denoise(img):
     ycc = img.convert("YCbCr")
     y, cb, cr = ycc.split()
@@ -98,8 +118,10 @@ def enhance(src, dst, max_side=2400, quality=88, verbose=True):
     a = np.asarray(img).astype(np.float32) / 255.0
     a, gains = white_balance(a)
     a, g, med = tone(a)
+    a = vibrance(a)
     out = Image.fromarray((np.clip(a, 0, 1) * 255 + 0.5).astype(np.uint8))
     out = chroma_denoise(out)
+    out = clarity(out)
     if max(out.size) > max_side:
         out.thumbnail((max_side, max_side), Image.LANCZOS)
     out = out.filter(ImageFilter.UnsharpMask(**SHARPEN))
