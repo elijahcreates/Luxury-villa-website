@@ -87,8 +87,19 @@
   <div class="hero-shade" aria-hidden="true"></div>
 
   <div class="hero-content">
-    <h1 class="hero-title">Villa Serena</h1>
-    <p class="hero-place">Orlando, Florida</p>
+    <p class="hero-eyebrow">Private pool villa<span class="eb-loc"> in Orlando, Florida</span></p>
+    <h1 class="hero-title">
+      <span class="line"><span>A pool villa with room</span></span>
+      <span class="line"><span>for the whole family</span></span>
+    </h1>
+    <p class="hero-lede">
+      8 bedrooms, 8 bathrooms and 13 beds, with a gated private pool and kitchen kashering
+      included. About a 12-minute walk to OTA Minyan House.
+    </p>
+    <div class="hero-actions">
+      <a href="#gallery" class="btn btn-light">Explore the villa</a>
+      <a href="#book" class="btn btn-gold" data-book>Check availability</a>
+    </div>
   </div>
 
   <div class="hero-facts" aria-label="Villa at a glance">
@@ -98,6 +109,59 @@
     <div class="fact"><span class="fact-num">12<small> min</small></span><span class="fact-label">Walk to OTA Minyan House</span></div>
   </div>
 
+  <a href="#welcome" class="scroll-cue" aria-label="Scroll to learn more"><span></span></a>
+</section>
+
+<!-- ============================ WELCOME ============================ -->
+<section class="welcome section" id="welcome">
+  <div class="container welcome-grid">
+    <div class="welcome-copy reveal">
+      <h2 class="display">Space for three generations under one roof</h2>
+      <p class="lead">
+        With eight bedrooms and eight bathrooms, grandparents, parents and kids each get
+        their own space, then meet again around the pool, the dining table or the big screen.
+      </p>
+      <p>
+        Spend sunny afternoons on the pool deck, cook together in the fully equipped
+        kitchen, and enjoy the ease of a kosher-friendly stay, with kitchen kashering
+        included in your villa package.
+      </p>
+      <a href="#villa" class="link-arrow">See the bedrooms <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="welcome-media reveal">
+      <figure class="wm-main">
+        <picture>
+          <source type="image/webp" srcset="assets/img/exterior-front-640.webp 640w, assets/img/exterior-front-1024.webp 1024w, assets/img/exterior-front-1206.webp 1206w" sizes="(min-width: 960px) 40vw, 90vw">
+          <img src="assets/img/exterior-front.jpg" alt="Front exterior of the two-storey villa with a paver driveway" width="1206" height="712" loading="lazy" decoding="async">
+        </picture>
+      </figure>
+      <figure class="wm-accent">
+        <picture>
+          <source type="image/webp" srcset="assets/img/dining-living-640.webp 640w, assets/img/dining-living-1024.webp 1024w" sizes="(min-width: 960px) 22vw, 50vw">
+          <img src="assets/img/dining-living.jpg" alt="Open-plan dining area with a large table and the living room beyond" width="2560" height="1920" loading="lazy" decoding="async">
+        </picture>
+      </figure>
+          </div>
+  </div>
+</section>
+
+<!-- ============================ PHOTO BAND ============================ -->
+<section class="photo-band" aria-label="The kitchen and living room">
+  <figure>
+    <picture>
+      <source type="image/webp" srcset="assets/img/kitchen-640.webp 640w, assets/img/kitchen-1024.webp 1024w, assets/img/kitchen-1206.webp 1206w" sizes="(min-width: 760px) 50vw, 100vw">
+      <img src="assets/img/kitchen.jpg" alt="Kitchen with dark cabinets, stainless appliances and an island with four bar stools" width="1206" height="711" loading="lazy" decoding="async">
+    </picture>
+    <figcaption>Kitchen</figcaption>
+  </figure>
+  <figure>
+    <picture>
+      <source type="image/webp" srcset="assets/img/living-room-640.webp 640w, assets/img/living-room-1024.webp 1024w, assets/img/living-room-1600.webp 1600w" sizes="(min-width: 760px) 50vw, 100vw">
+      <img src="assets/img/living-room.jpg" alt="Living room with sectional sofa and sliding doors to the pool" width="2560" height="1920" loading="lazy" decoding="async">
+    </picture>
+    <figcaption>Living room</figcaption>
+  </figure>
 </section>
 
 <!-- ============================ GALLERY ============================ -->
@@ -105,6 +169,7 @@
   <div class="container">
     <div class="section-head reveal">
       <h2 class="display center">Photos</h2>
+      <p class="section-intro">Every room, from the pool deck to the bunk room. Tap a photo to see it full size.</p>
     </div>
 
     <div class="gallery-filters reveal" role="tablist" aria-label="Filter photos">
@@ -130,6 +195,12 @@
     <div class="villa-top">
       <div class="reveal">
         <h2 class="display">Bedrooms and bathrooms</h2>
+      </div>
+      <div class="villa-intro reveal">
+        <p class="lead">
+          Thirteen beds across eight bedrooms, from two king rooms to a bunk room
+          for the kids. With eight bathrooms, nobody waits long in the morning.
+        </p>
       </div>
     </div>
 
@@ -329,8 +400,9 @@
 
     <div class="kosher-card reveal">
       <div class="kc-head">
+        <span class="kc-tag">Optional add-on</span>
         <h3>Kosher Orlando<br>Rental Package</h3>
-        <p>Optional extras for Shabbat, Yom Tov and family meals that you can add to your stay.</p>
+        <p>Helpful extras for Shabbat, Yom Tov and family meals, available to add to your stay.</p>
       </div>
       <ul class="kc-list">
         <li>Urn</li>
@@ -395,9 +467,11 @@
       <a href="#book" class="btn btn-gold btn-lg" data-book>Check availability</a>
     </div>
 
-    <!-- Placeholder: set BOOKING_URL in js/main.js and this box disappears -->
+    <!-- DEMO PLACEHOLDER: set BOOKING_URL in js/main.js to connect the owner's booking site -->
     <div class="booking-placeholder" id="booking-placeholder" role="note">
-      <p>Your existing booking link will be here.</p>
+      <span class="bp-tag">Demo placeholder</span>
+      <p>The owner's existing direct-booking link will connect here.<br>
+        <code>BOOKING_URL</code> · <span class="bp-status">not yet provided</span></p>
     </div>
   </div>
 </section>
@@ -429,6 +503,11 @@
         <li><a href="#pricing">Pricing</a></li>
       </ul>
     </nav>
+    <div class="footer-book">
+      <h4>Book direct</h4>
+      <p>$2,300 for 4 nights, all fees included.</p>
+      <a href="#book" class="btn btn-gold btn-sm" data-book>Check availability</a>
+    </div>
   </div>
   <div class="container footer-base">
     <p>© <span id="year">2026</span> Villa Serena. All rights reserved.</p>
@@ -463,8 +542,10 @@
 <div class="modal" id="book-modal" role="dialog" aria-modal="true" aria-labelledby="book-modal-title" hidden>
   <div class="modal-card">
     <button class="modal-close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
-    <h3 id="book-modal-title">Booking link goes here</h3>
-    <p>Your existing booking link will be here. Guests will tap this button to pick their dates and reserve.</p>
+    <span class="bp-tag">Demo placeholder</span>
+    <h3 id="book-modal-title">Booking link coming soon</h3>
+    <p>In the live website, this button opens the owner's existing direct-booking page so guests can check dates and reserve.</p>
+    <p class="modal-small">Developer note: add the URL to <code>BOOKING_URL</code> in <code>js/main.js</code>. Every "Book now" and "Check availability" button will link to it automatically.</p>
     <button class="btn btn-dark btn-block" data-close>Got it</button>
   </div>
 </div>
