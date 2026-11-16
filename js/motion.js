@@ -20,6 +20,7 @@
   let lenis = null;
   if (desktop && window.Lenis) {
     lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+    window.__lenis = lenis;
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -171,8 +172,15 @@
   }
 
   /* ---------- keep positions right when the page height changes ---------- */
+  // refresh after the gallery finishes growing or shrinking (keeps the scroll position)
   let t;
-  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(() => ScrollTrigger.refresh(), 200); })
-    .observe(document.body);
+  window.addEventListener("gallery:change", () => {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      const y = window.scrollY;
+      ScrollTrigger.refresh();
+      if (Math.abs(window.scrollY - y) > 1) (lenis ? lenis.scrollTo(y, { immediate: true }) : window.scrollTo(0, y));
+    }, 800);
+  });
   window.addEventListener("load", () => ScrollTrigger.refresh());
 })();

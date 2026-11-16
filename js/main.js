@@ -149,39 +149,80 @@ function gridColumns() {
   return getComputedStyle(grid).gridTemplateColumns.split(" ").filter(Boolean).length || 4;
 }
 
-function renderGallery() {
+const tileCache = new Map(); // slug -> tile, so tiles already on screen are kept, never rebuilt
+const EASE = "cubic-bezier(.16, 1, .3, 1)";
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function makeTile(p) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.setAttribute("aria-label", `Open photo: ${p.caption}`);
+  btn.innerHTML = `
+    <picture>
+      <source type="image/webp" srcset="${srcset(p, 1600)}">
+      <img src="${IMG}${p.slug}.jpg" alt="${p.caption}" loading="lazy" decoding="async">
+    </picture>
+    <span class="g-cap">${p.caption}${zoomIcon}</span>`;
+  btn.addEventListener("click", () => openLightbox(visible.indexOf(p)));
+  return btn;
+}
+
+/* Lay out the gallery. Tiles that are already showing stay exactly where they
+   are (no flash, no reload); only new tiles fade in, and the grid's height
+   eases to its new size instead of snapping. */
+function renderGallery({ animate = true } = {}) {
   const all = currentFilter === "all";
   const list = all ? PHOTOS : PHOTOS.filter((p) => p.cat === currentFilter);
   const shown = all && !expanded ? list.slice(0, INITIAL_COUNT) : list;
   visible = list;
 
+  const startH = grid.offsetHeight;
+  const startY = window.scrollY;
   const cols = gridColumns();
   const curated = all && cols === 4;
   // in other layouts, widen the first few tiles so the last row is always full
   const extra = curated ? 0 : (cols - (shown.length % cols)) % cols;
 
-  grid.innerHTML = "";
+  const onScreen = new Set(grid.children);
+  const fresh = [];
+  const keep = new Set();
   shown.forEach((p, i) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
+    let tile = tileCache.get(p.slug);
+    if (!tile) { tile = makeTile(p); tileCache.set(p.slug, tile); }
     const size = curated ? p.size || "" : i < extra ? "wide" : "";
-    btn.className = `g-item ${size}`.trim();
-    btn.style.animationDelay = `${Math.min(i, 12) * 45}ms`;
-    btn.setAttribute("aria-label", `Open photo: ${p.caption}`);
+    tile.className = `g-item ${size}`.trim();
     const sizes = size === "big" || size === "wide" ? "(min-width: 960px) 50vw, 100vw" : "(min-width: 960px) 25vw, 50vw";
-    btn.innerHTML = `
-      <picture>
-        <source type="image/webp" srcset="${srcset(p, 1600)}" sizes="${sizes}">
-        <img src="${IMG}${p.slug}.jpg" alt="${p.caption}" loading="lazy" decoding="async">
-      </picture>
-      <span class="g-cap">${p.caption}${zoomIcon}</span>`;
-    btn.addEventListener("click", () => openLightbox(list.indexOf(p)));
-    grid.appendChild(btn);
+    tile.querySelector("source").sizes = sizes;
+    if (!onScreen.has(tile)) fresh.push(tile);
+    keep.add(tile);
+    grid.appendChild(tile); // moves existing tiles into order without rebuilding them
   });
+  [...grid.children].forEach((el) => { if (!keep.has(el)) el.remove(); });
+
+  // first paint uses the CSS entrance; later changes use the smooth path below
+  if (!animate || reduceMotion || startH === 0) {
+    fresh.forEach((t, i) => { t.style.animationDelay = `${Math.min(i, 12) * 45}ms`; });
+  } else {
+    grid.querySelectorAll(".g-item").forEach((t) => { t.style.animation = "none"; t.style.opacity = 1; t.style.transform = "none"; });
+    if (Math.abs(window.scrollY - startY) > 1) window.scrollTo(0, startY); // never let the page jump
+    const endH = grid.offsetHeight;
+    if (endH !== startH) {
+      grid.style.overflow = "hidden";
+      grid.animate([{ height: `${startH}px` }, { height: `${endH}px` }], { duration: 700, easing: EASE })
+        .finished.then(() => { grid.style.overflow = ""; }).catch(() => {});
+    }
+    fresh.forEach((t, i) => {
+      t.animate(
+        [{ opacity: 0, transform: "translateY(28px) scale(.97)" }, { opacity: 1, transform: "none" }],
+        { duration: 750, delay: Math.min(i, 14) * 55, easing: EASE, fill: "backwards" }
+      );
+    });
+  }
 
   const hidden = list.length - shown.length;
   moreBtn.parentElement.hidden = hidden <= 0 && !(all && expanded);
   moreBtn.textContent = all && expanded ? "Show fewer photos" : "Show all photos";
+  window.dispatchEvent(new Event("gallery:change"));
 }
 
 chips.forEach((chip) => {
@@ -192,19 +233,43 @@ chips.forEach((chip) => {
   });
 });
 
-moreBtn.addEventListener("click", () => {
-  const collapsing = expanded;
-  expanded = !expanded;
+function glideTo(el) {
+  return new Promise((resolve) => {
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    if (Math.abs(window.scrollY - top) < 4) return resolve();
+    if (window.__lenis) {
+      window.__lenis.scrollTo(top, { duration: 1.1, onComplete: resolve });
+    } else {
+      window.scrollTo({ top, behavior: reduceMotion ? "auto" : "smooth" });
+      let last = -1, still = 0;
+      const check = () => {
+        const y = Math.round(window.scrollY);
+        still = y === last ? still + 1 : 0;
+        last = y;
+        if (still > 6) resolve(); else requestAnimationFrame(check);
+      };
+      requestAnimationFrame(check);
+    }
+  });
+}
+
+moreBtn.addEventListener("click", async () => {
+  if (expanded) {
+    // glide back up to the gallery first, then tuck the extra photos away below the fold
+    await glideTo(document.getElementById("gallery"));
+    expanded = false;
+  } else {
+    expanded = true;
+  }
   renderGallery();
-  if (collapsing) document.getElementById("gallery").scrollIntoView({ behavior: "smooth" });
 });
 
 let lastCols = 0;
 window.addEventListener("resize", () => {
   const c = gridColumns();
-  if (c !== lastCols) { lastCols = c; renderGallery(); }
+  if (c !== lastCols) { lastCols = c; renderGallery({ animate: false }); }
 });
-renderGallery();
+renderGallery({ animate: false });
 lastCols = gridColumns();
 
 /* --------------------------------------------------------------------------
