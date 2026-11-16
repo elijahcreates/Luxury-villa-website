@@ -44,7 +44,7 @@ const PHOTOS = [
   { slug: "bathroom-kids",         cat: "bathrooms", caption: "Bathroom",                           w: 2560 },
   { slug: "bathroom-vanity",       cat: "bathrooms", caption: "Bathroom",                           w: 2560 },
 ];
-const INITIAL_COUNT = 12;
+const INITIAL_COUNT = 4;
 const IMG = "assets/img/";
 
 const widthsFor = (w) => (w > 1206 ? [640, 1024, 1600, 2200] : [640, 1024, 1206]);
@@ -181,7 +181,7 @@ function renderGallery() {
 
   const hidden = list.length - shown.length;
   moreBtn.parentElement.hidden = hidden <= 0 && !(all && expanded);
-  moreBtn.textContent = all && expanded ? "Show fewer photos" : "View all photos";
+  moreBtn.textContent = all && expanded ? "Show fewer photos" : "Show all photos";
 }
 
 chips.forEach((chip) => {
