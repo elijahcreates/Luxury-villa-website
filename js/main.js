@@ -372,3 +372,62 @@ if ("IntersectionObserver" in window) {
   }, { threshold: 0.9 });
   document.querySelectorAll("main .btn-gold, .section .btn-gold").forEach((b) => shineObs.observe(b));
 }
+
+/* --------------------------------------------------------------------------
+   Headings write themselves in, lists arrive item by item, numbers count up.
+   Only text moves; photos stay still.
+   -------------------------------------------------------------------------- */
+(() => {
+  if (!("IntersectionObserver" in window)) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("is-in");
+      if (e.target.dataset.count) countUp(e.target);
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: "0px 0px -12% 0px", threshold: 0.2 });
+
+  // headings: split plain-text headings into words
+  document.querySelectorAll("main h2.display, main h3.subhead").forEach((h) => {
+    if (h.children.length) return;
+    const words = h.textContent.trim().split(/\s+/);
+    h.setAttribute("aria-label", h.textContent.trim());
+    h.innerHTML = words.map((w, i) => `<span class="w" aria-hidden="true" style="--i:${i}">${w}</span>`).join(" ");
+    h.classList.add("split");
+    io.observe(h);
+  });
+
+  // lists of text
+  document.querySelectorAll(".kc-list, .pc-list, .amen-list, .rooms").forEach((list) => {
+    [...list.children].forEach((li, i) => li.style.setProperty("--i", Math.min(i, 9)));
+    list.classList.add("stagger");
+    io.observe(list);
+  });
+
+  // numbers
+  const fmt = (n) => n.toLocaleString("en-US");
+  function countUp(el) {
+    const target = Number(el.dataset.count);
+    const dur = target > 100 ? 1600 : 1100;
+    const start = performance.now();
+    const tick = (now) => {
+      const t = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = fmt(Math.round(target * eased));
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  document.querySelectorAll(".vstat-num, .bed-mix b, .pc-amount").forEach((el) => {
+    const n = Number(el.textContent.replace(/[^0-9]/g, ""));
+    if (!n) return;
+    el.dataset.count = n;
+    el.style.minWidth = el.offsetWidth + "px"; // keep the width steady while counting
+    el.style.display = el.style.display || "inline-block";
+    el.textContent = "0";
+    io.observe(el);
+  });
+})();

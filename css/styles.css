@@ -102,7 +102,6 @@ p + p { margin-top: 1.1em; }
 .subhead {
   font-family: var(--serif); font-weight: 500; font-size: clamp(26px, 2.6vw, 34px);
   color: var(--ink); margin: clamp(60px, 7vw, 90px) 0 28px;
-  display: flex; align-items: center; gap: 22px;
 }
 
 .link-arrow {
@@ -275,12 +274,11 @@ p + p { margin-top: 1.1em; }
 .hero-content {
   position: relative; z-index: 2;
   width: 100%; max-width: calc(var(--container) + var(--gutter) * 2); margin: 0 auto;
-  padding: 140px var(--gutter) 0;
+  padding: 140px var(--gutter) clamp(72px, 13vh, 140px);
 }
-.hero-eyebrow { color: rgba(255,255,255,.9); font-size: 16px; font-weight: 500; margin-bottom: 20px; opacity: 0; animation: fadeUp 1s .3s var(--ease-out) forwards; }
 .hero-title { text-shadow: 0 2px 30px rgba(0,0,0,.25);
   font-family: var(--serif); font-weight: 400;
-  font-size: clamp(40px, 5.4vw, 80px); line-height: 1.02; letter-spacing: -0.025em;
+  font-size: clamp(46px, 6.4vw, 96px); line-height: 1.02; letter-spacing: -0.025em;
 }
 .hero-title .line { display: block; padding-bottom: 0.08em; }
 .hero-title .w {
@@ -291,27 +289,10 @@ p + p { margin-top: 1.1em; }
 @keyframes wordIn { to { opacity: 1; transform: none; filter: blur(0); } }
 .hero-title em { font-style: italic; color: var(--gold-2); }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-.hero-lede {
-  max-width: 540px; margin-top: 26px; font-size: clamp(16px, 1.3vw, 18.5px); line-height: 1.7;
-  color: rgba(255,255,255,.86); opacity: 0; animation: fadeUp 1s 1.45s var(--ease-out) forwards;
+.hero-place {
+  margin-top: 22px; font-size: clamp(17px, 1.4vw, 20px); font-weight: 500; letter-spacing: 0.01em;
+  color: rgba(255,255,255,.9); opacity: 0; animation: fadeUp 1s 1.35s var(--ease-out) forwards;
 }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; opacity: 0; animation: fadeUp 1s 1.6s var(--ease-out) forwards; }
-
-.hero-facts {
-  position: relative; z-index: 2;
-  width: 100%; max-width: calc(var(--container) + var(--gutter) * 2); margin: clamp(48px, 7vh, 80px) auto 0;
-  padding: 0 var(--gutter) clamp(28px, 5vh, 46px);
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  opacity: 0; animation: fadeUp 1s 1.8s var(--ease-out) forwards;
-}
-.fact {
-  display: flex; flex-direction: column; gap: 4px;
-  padding: 22px 0 0;
-  margin-right: 28px;
-}
-.fact-num { font-family: var(--serif); font-size: clamp(34px, 3.4vw, 46px); line-height: 1; }
-.fact-num small { font-size: .42em; letter-spacing: .08em; margin-left: 4px; font-family: var(--sans); opacity: .8; }
-.fact-label { font-size: 14px; letter-spacing: 0.005em; opacity: .78; font-weight: 600; }
 
 .scroll-cue {
   position: absolute; z-index: 3; right: var(--gutter); bottom: 46px;
@@ -689,8 +670,7 @@ p + p { margin-top: 1.1em; }
 /* ==========================================================================
    Reveal on scroll
    ========================================================================== */
-.js .reveal { transform: translateY(26px); transition: transform 1.1s var(--ease-out); }
-.js .reveal.is-in { opacity: 1; transform: none; }
+/* content stays put as you scroll: no sliding, so nothing jumps */
 
 /* ==========================================================================
    Responsive
@@ -728,16 +708,8 @@ p + p { margin-top: 1.1em; }
   .hero-shade { display: none; }
   .hero-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(12,20,22,.5) 0%, rgba(12,20,22,0) 28%, rgba(12,20,22,0) 58%, rgba(29,42,44,.85) 90%, var(--ink) 100%); }
   .hero-content { padding-top: 6px; margin-top: -34px; }
-  .hero-eyebrow { font-size: 14.5px; margin-bottom: 14px; }
-  .hero-title { font-size: clamp(38px, 10.6vw, 52px); }
-  .hero-title .line { display: inline; padding: 0; }
-  .hero-lede { margin-top: 20px; }
-  .hero-actions { flex-direction: column; align-items: stretch; margin-top: 30px; }
-  .hero-actions .btn { width: 100%; }
-  .hero-facts { grid-template-columns: repeat(2, 1fr); gap: 0 20px; margin-top: 40px; padding-bottom: 28px; }
-  .fact { margin-right: 0; padding: 16px 0 14px; }
-  .fact-num { font-size: 32px; }
-  .fact-label { font-size: 13px; letter-spacing: 0.005em; }
+    .hero-title { font-size: clamp(34px, 9.6vw, 48px); }
+  .hero-content { padding-bottom: 44px; }
 
   .welcome-media { padding-left: 0; padding-bottom: 26%; }
   .wm-accent { width: 48%; border-width: 6px; }
@@ -797,7 +769,6 @@ p + p { margin-top: 1.1em; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; }
-  .js .reveal { transform: none; }
   .hero-media img { transform: none; }
   .hero-title .w { filter: none; transform: none; }
   .btn::after { display: none; }
@@ -809,4 +780,23 @@ p + p { margin-top: 1.1em; }
 @keyframes bpPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(198,166,113,0); border-color: rgba(198,166,113,.7); }
   40% { box-shadow: 0 0 0 10px rgba(198,166,113,.18); border-color: var(--gold-2); }
+}
+
+/* ==========================================================================
+   Text that comes alive as you scroll (photos stay still)
+   ========================================================================== */
+.js .split .w {
+  display: inline-block; opacity: 0; transform: translateY(0.4em); filter: blur(8px);
+  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out), filter .9s var(--ease-out);
+  transition-delay: calc(var(--i) * 75ms);
+}
+.js .split.is-in .w { opacity: 1; transform: none; filter: blur(0); }
+
+.js .stagger > li { opacity: 0; }
+.js .stagger.is-in > li { animation: itemIn .8s var(--ease-out) both; animation-delay: calc(var(--i) * 90ms + 150ms); }
+@keyframes itemIn { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .split .w { opacity: 1; transform: none; filter: none; }
+  .js .stagger > li { opacity: 1; animation: none !important; }
 }
