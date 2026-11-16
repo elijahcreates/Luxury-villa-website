@@ -59,13 +59,17 @@ document.documentElement.classList.add("js");
 const header = document.querySelector(".site-header");
 const mobileBar = document.querySelector(".mobile-bar");
 const hero = document.querySelector(".hero");
+const bookSection = document.getElementById("book");
 
 function onScroll() {
   const y = window.scrollY;
   header.classList.toggle("is-scrolled", y > 40);
   const pastHero = y > (hero ? hero.offsetHeight * 0.75 : 600);
-  const nearEnd = window.innerHeight + y > document.body.scrollHeight - 40;
-  mobileBar.classList.toggle("is-visible", pastHero && !nearEnd);
+  // Hide the sticky bar once the booking section is on screen, so its own
+  // "Check availability" button is the only one showing.
+  const bookTop = bookSection ? bookSection.getBoundingClientRect().top : Infinity;
+  const atBooking = bookTop < window.innerHeight;
+  mobileBar.classList.toggle("is-visible", pastHero && !atBooking);
 }
 window.addEventListener("scroll", onScroll, { passive: true });
 onScroll();
@@ -285,7 +289,6 @@ stage.addEventListener("touchend", (e) => {
    -------------------------------------------------------------------------- */
 const modal = document.getElementById("book-modal");
 const placeholder = document.getElementById("booking-placeholder");
-const bookSection = document.getElementById("book");
 
 function openModal() {
   lastFocus = document.activeElement;
