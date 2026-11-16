@@ -449,7 +449,9 @@
 
     <!-- DEMO PLACEHOLDER: set BOOKING_URL in js/main.js to connect the owner's booking site -->
     <div class="booking-placeholder" id="booking-placeholder" role="note">
-      <p>Your existing booking link will connect here.</p>
+      <span class="bp-tag">Demo placeholder</span>
+      <p>Your existing direct-booking link will connect here.<br>
+        <code>BOOKING_URL</code> · <span class="bp-status">not yet provided</span></p>
     </div>
   </div>
 </section>
@@ -520,8 +522,10 @@
 <div class="modal" id="book-modal" role="dialog" aria-modal="true" aria-labelledby="book-modal-title" hidden>
   <div class="modal-card">
     <button class="modal-close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
-    <h3 id="book-modal-title">Your booking link goes here</h3>
-    <p>Your existing booking link will connect here. Once it's in, this button takes guests straight to it to pick their dates and reserve.</p>
+    <span class="bp-tag">Demo placeholder</span>
+    <h3 id="book-modal-title">Booking link coming soon</h3>
+    <p>In the live website, this button opens your existing direct-booking page so guests can check dates and reserve.</p>
+    <p class="modal-small">Developer note: add the URL to <code>BOOKING_URL</code> in <code>js/main.js</code>. Every "Book now" and "Check availability" button will link to it automatically.</p>
     <button class="btn btn-dark btn-block" data-close>Got it</button>
   </div>
 </div>
