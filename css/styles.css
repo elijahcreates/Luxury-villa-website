@@ -800,3 +800,71 @@ p + p { margin-top: 1.1em; }
   .js .split .w { opacity: 1; transform: none; filter: none; }
   .js .stagger > li { opacity: 1; animation: none !important; }
 }
+
+/* ==========================================================================
+   Scroll motion (js/motion.js)
+   ========================================================================== */
+/* smooth scrolling */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* curtain photos: the picture scales inside its frame */
+.motion figure > picture { display: block; transform-origin: 50% 60%; will-change: transform; }
+.motion .hero-media { will-change: clip-path, transform; }
+
+/* amenities ribbon */
+.ribbon {
+  overflow: hidden; background: var(--ivory);
+  padding: clamp(28px, 4vw, 52px) 0;
+}
+.ribbon-track { display: flex; width: max-content; align-items: center; white-space: nowrap; }
+.ribbon-track span {
+  font-family: var(--serif); font-weight: 400; line-height: 1;
+  font-size: clamp(40px, 7vw, 104px); letter-spacing: -0.02em; color: var(--ink);
+  padding: 0 clamp(18px, 2.4vw, 36px);
+}
+.ribbon-track span:nth-of-type(even) { color: transparent; -webkit-text-stroke: 1px var(--ink); }
+.ribbon-track i { font-style: normal; color: var(--gold); font-size: clamp(18px, 2vw, 28px); }
+
+/* words that light up */
+[data-lightup] .lw { transition: none; }
+
+/* sideways photo strip */
+.hs-wrap { width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; }
+.amen-strip.is-hscroll {
+  display: flex; gap: 22px; width: max-content; align-items: stretch;
+  padding: 0 max(var(--gutter), calc((100vw - var(--container)) / 2));
+  margin-top: clamp(64px, 8vw, 110px);
+}
+.amen-strip.is-hscroll figure { flex: none; height: min(66vh, 620px); aspect-ratio: 4 / 5; }
+.hs-intro {
+  flex: none; width: clamp(260px, 24vw, 360px); align-self: center; padding-right: 20px;
+}
+.hs-intro h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 3.4vw, 50px); line-height: 1.05; color: var(--ink); }
+.hs-intro p { margin-top: 14px; color: var(--ink-soft); font-size: 16px; }
+
+/* custom cursor */
+.has-cursor, .has-cursor a, .has-cursor button, .has-cursor .g-item { cursor: none; }
+.cursor-dot, .cursor-ring {
+  position: fixed; left: 0; top: 0; z-index: 9999; pointer-events: none;
+  border-radius: 50%; opacity: 0; transition: opacity .3s;
+}
+.cursor-on .cursor-dot, .cursor-on .cursor-ring { opacity: 1; }
+.cursor-dot { width: 8px; height: 8px; margin: -4px 0 0 -4px; background: var(--gold); }
+.cursor-ring {
+  width: 40px; height: 40px; margin: -20px 0 0 -20px;
+  border: 1px solid rgba(176,141,87,.7);
+  display: grid; place-items: center;
+  transition: opacity .3s, width .35s var(--ease-out), height .35s var(--ease-out), margin .35s var(--ease-out), background-color .35s, border-color .35s;
+}
+.cursor-ring span { font-size: 13px; font-weight: 600; letter-spacing: .02em; color: #fff; opacity: 0; transition: opacity .25s; }
+.cursor-ring.is-link { width: 60px; height: 60px; margin: -30px 0 0 -30px; background: rgba(198,166,113,.14); }
+.cursor-ring.is-view { width: 92px; height: 92px; margin: -46px 0 0 -46px; background: var(--gold); border-color: var(--gold); }
+.cursor-ring.is-view span { opacity: 1; }
+.has-cursor .cursor-ring.is-view ~ .cursor-dot { opacity: 0; }
+
+/* magnetic buttons: let GSAP own the movement */
+.btn.is-magnetic { transition: color .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease); }
+.btn.is-magnetic:hover { transform: none; }

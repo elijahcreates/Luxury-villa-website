@@ -42,6 +42,8 @@ vercel.json           Vercel settings (static site, headers)
 robots.txt            blocks search engines during the preview phase
 css/styles.css        design system + responsive layout
 js/main.js            nav, gallery, lightbox, booking placeholder
+js/motion.js          scroll animations (smooth scroll, photo reveals, cursor)
+js/vendor/            GSAP + ScrollTrigger 3.12.5, Lenis 1.1.13 (bundled, no CDN)
 assets/img/           responsive WebP + JPEG photos (metadata/GPS stripped)
 assets/favicon.svg
 tools/enhance.py      natural photo enhancement (global corrections only)
