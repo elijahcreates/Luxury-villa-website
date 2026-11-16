@@ -60,9 +60,17 @@ const header = document.querySelector(".site-header");
 const mobileBar = document.querySelector(".mobile-bar");
 const hero = document.querySelector(".hero");
 
+let lastY = window.scrollY;
 function onScroll() {
   const y = window.scrollY;
   header.classList.toggle("is-scrolled", y > 40);
+  // hide the menu bar while scrolling down, bring it back on any scroll up
+  const delta = y - lastY;
+  if (Math.abs(delta) > 6) {
+    const menuOpen = document.body.classList.contains("menu-open");
+    header.classList.toggle("is-hidden", delta > 0 && y > 320 && !menuOpen);
+    lastY = y;
+  }
   const pastHero = y > (hero ? hero.offsetHeight * 0.75 : 600);
   const nearEnd = window.innerHeight + y > document.body.scrollHeight - 40;
   mobileBar.classList.toggle("is-visible", pastHero && !nearEnd);
@@ -352,3 +360,15 @@ function trapFocus(e, container) {
 }
 
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* --------------------------------------------------------------------------
+   Gold buttons catch the light once as they scroll into view
+   -------------------------------------------------------------------------- */
+if ("IntersectionObserver" in window) {
+  const shineObs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add("shine"); shineObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.9 });
+  document.querySelectorAll("main .btn-gold, .section .btn-gold").forEach((b) => shineObs.observe(b));
+}
