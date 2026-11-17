@@ -25,9 +25,11 @@ ImageDraw.Draw(reg).polygon([(1150,421.8),(2200,17.5),(2200,1000),(1985,978),(20
 reg=np.asarray(reg.filter(ImageFilter.GaussianBlur(1.5))).astype(np.float32)/255
 w=hue_w*sat_w*reg
 pm=Image.new('L',(W,H),0)
-ImageDraw.Draw(pm).polygon([(2075,803),(2142,803),(2145,846),(2166,852),(2168,990),(2032,995),(2036,852),(2072,846)],fill=255)
-base=np.asarray(pm.filter(ImageFilter.GaussianBlur(1))).astype(np.float32)/255
-w=w*(1-0.75*base)
+dp=ImageDraw.Draw(pm)
+dp.rounded_rectangle([2041,849,2166,993],radius=14,fill=255)   # lamp body, rounded shoulders
+dp.rounded_rectangle([2082,808,2149,852],radius=7,fill=255)    # neck
+base=np.asarray(pm.filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1.0))).astype(np.float32)/255
+w=w*(1-base)  # the lamp itself is never painted
 # curtain panel and rod stay as photographed
 cp=Image.new('L',(W,H),0); dr=ImageDraw.Draw(cp)
 dr.polygon([(1309,421),(1340,419),(1369,423),(1376,638),(1302,638)],fill=255)
@@ -35,7 +37,11 @@ curt=np.asarray(cp.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.GaussianB
 w=w*(1-curt)
 w=np.asarray(Image.fromarray((w*255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.4))).astype(np.float32)/255
 # target: the brightness of the room's existing white walls, keeping this wall's light and shadow
-Ls=np.asarray(Image.fromarray((L*255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(4.0))).astype(np.float32)/255
+# wall shading measured from wall pixels only, so bright objects (lampshade) don't make a halo
+_wm=(w>0.6).astype(np.float32)
+_n=np.asarray(Image.fromarray((L*_wm*255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(6))).astype(np.float32)
+_d=np.asarray(Image.fromarray((_wm*255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(6))).astype(np.float32)
+Ls=np.where(_d>3,_n/np.maximum(_d,1e-3),L)
 core=w>0.85
 Lw=np.median(Ls[core])
 ref=a[200:700,500:900].reshape(-1,3)@np.array([.2126,.7152,.0722])
@@ -60,6 +66,11 @@ fallback=cov<0.02
 wall_before[fallback]=a[fallback]; wall_after[fallback]=painted[fallback]
 out=np.where(pure[...,None]>0, painted, np.clip(a+w[...,None]*(wall_after-wall_before),0,1))
 out=np.clip(out,0,1)
+# lamp base: keep the metal as photographed, only take out the mustard reflection
+lc=base*hue_w*smooth(ss,0.15,0.5)
+Ll=(out@np.array([.2126,.7152,.0722]))[...,None]
+silver=np.array([1.0,0.985,0.96]); silver=silver/(silver@np.array([.2126,.7152,.0722]))
+out=out*(1-0.45*lc[...,None])+np.clip(Ll*1.04*silver,0,1)*(0.45*lc[...,None])
 # curtain: remove the mustard cast the old wall threw on the fabric (colour only, same brightness)
 cast=curt*hue_w*smooth(ss,0.12,0.45)
 Lc=(out@np.array([.2126,.7152,.0722]))[...,None]
