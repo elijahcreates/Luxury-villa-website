@@ -45,7 +45,7 @@ const PHOTOS = [
 ];
 const INITIAL_COUNT = 4;
 const IMG = "assets/img/";
-const IMG_V = "?v=3"; // bump when photos change so browsers fetch the new files
+const IMG_V = "?v=4"; // bump when photos change so browsers fetch the new files
 
 const widthsFor = (w) => (w > 1206 ? [640, 1024, 1600, 2200] : [640, 1024, 1206]);
 const srcset = (p, max = Infinity) =>
