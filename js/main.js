@@ -45,10 +45,11 @@ const PHOTOS = [
 ];
 const INITIAL_COUNT = 4;
 const IMG = "assets/img/";
+const IMG_V = "?v=2"; // bump when photos change so browsers fetch the new files
 
 const widthsFor = (w) => (w > 1206 ? [640, 1024, 1600, 2200] : [640, 1024, 1206]);
 const srcset = (p, max = Infinity) =>
-  widthsFor(p.w).filter((x) => x <= max).map((x) => `${IMG}${p.slug}-${x}.webp ${x}w`).join(", ");
+  widthsFor(p.w).filter((x) => x <= max).map((x) => `${IMG}${p.slug}-${x}.webp${IMG_V} ${x}w`).join(", ");
 
 document.documentElement.classList.add("js");
 
@@ -159,7 +160,7 @@ function makeTile(p) {
   btn.innerHTML = `
     <picture>
       <source type="image/webp" srcset="${srcset(p, 1600)}">
-      <img src="${IMG}${p.slug}.jpg" alt="${p.caption}" loading="lazy" decoding="async">
+      <img src="${IMG}${p.slug}.jpg${IMG_V}" alt="${p.caption}" loading="lazy" decoding="async">
     </picture>
     <span class="g-cap">${p.caption}${zoomIcon}</span>`;
   btn.addEventListener("click", () => openLightbox(visible.indexOf(p)));
@@ -289,7 +290,7 @@ function showSlide(i) {
   const img = new Image();
   img.sizes = "100vw";
   img.srcset = srcset(p);
-  img.src = `${IMG}${p.slug}.jpg`;
+  img.src = `${IMG}${p.slug}.jpg${IMG_V}`;
   const swap = () => {
     lbImg.srcset = img.srcset;
     lbImg.sizes = "100vw";
@@ -317,7 +318,7 @@ function openLightbox(i) {
     const t = document.createElement("button");
     t.type = "button";
     t.setAttribute("aria-label", `Show photo ${n + 1}: ${p.caption}`);
-    t.innerHTML = `<img src="${IMG}${p.slug}-640.webp" alt="" loading="lazy">`;
+    t.innerHTML = `<img src="${IMG}${p.slug}-640.webp${IMG_V}" alt="" loading="lazy">`;
     t.addEventListener("click", () => showSlide(n));
     lbThumbs.appendChild(t);
   });

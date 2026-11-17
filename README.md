@@ -91,3 +91,9 @@ python3 tools/build_images.py photos/enhanced
 
 Re-running `tools/build_images.py` from the original files would undo these edits; run
 it, then repeat the polish and the wall recolour.
+
+### Photo caching
+
+Browsers keep photos for a day (see `vercel.json`). When a photo changes, bump the
+version tag so visitors get the new file right away: `IMG_V` at the top of `js/main.js`
+and every `?v=` in `index.html` (find and replace `?v=2` with `?v=3`).
