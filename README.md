@@ -86,6 +86,8 @@ python3 tools/build_images.py photos/enhanced
   because the owner is repainting it. Only the wall colour changed; the room's light and
   shadow, furniture and decor are as photographed. Retake this photo once the wall is
   painted.
+- **pool-deck:** rebuilt from the original export with `tools/clean_photo.py` (compression
+  blocking smoothed, gentle contrast) instead of the polish pass, which made it look crunchy.
 - The duplicate bathroom photo (`bathroom-glass-shower`, same room as `bathroom-vanity`)
   was removed from the gallery.
 
@@ -96,4 +98,4 @@ it, then repeat the polish and the wall recolour.
 
 Browsers keep photos for a day (see `vercel.json`). When a photo changes, bump the
 version tag so visitors get the new file right away: `IMG_V` at the top of `js/main.js`
-and every `?v=` in `index.html` (find and replace `?v=4` with `?v=5`).
+and every `?v=` in `index.html` (find and replace `?v=5` with `?v=6`).

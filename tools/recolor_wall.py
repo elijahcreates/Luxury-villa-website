@@ -21,8 +21,8 @@ hue_w=smooth(hh,14,26)*(1-smooth(hh,48,60))
 sat_w=smooth(ss,0.22,0.55)
 # only the accent-wall area (feathered): right of the window, above the nightstand
 reg=Image.new('L',(W,H),0)
-ImageDraw.Draw(reg).polygon([(1150,330),(2200,0),(2200,1000),(1985,978),(2010,602),(1250,636),(1150,640)],fill=255)
-reg=np.asarray(reg.filter(ImageFilter.GaussianBlur(3))).astype(np.float32)/255
+ImageDraw.Draw(reg).polygon([(1150,421.8),(2200,17.5),(2200,1000),(1985,978),(2010,602),(1250,636),(1150,640)],fill=255)  # top edge = wall/ceiling line
+reg=np.asarray(reg.filter(ImageFilter.GaussianBlur(1.5))).astype(np.float32)/255
 w=hue_w*sat_w*reg
 pm=Image.new('L',(W,H),0)
 ImageDraw.Draw(pm).polygon([(2075,803),(2142,803),(2145,846),(2166,852),(2168,990),(2032,995),(2036,852),(2072,846)],fill=255)
@@ -35,13 +35,13 @@ curt=np.asarray(cp.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.GaussianB
 w=w*(1-curt)
 w=np.asarray(Image.fromarray((w*255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.4))).astype(np.float32)/255
 # target: the brightness of the room's existing white walls, keeping this wall's light and shadow
-Ls=np.asarray(Image.fromarray((L*255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(2.0))).astype(np.float32)/255
+Ls=np.asarray(Image.fromarray((L*255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(4.0))).astype(np.float32)/255
 core=w>0.85
 Lw=np.median(Ls[core])
 ref=a[200:700,500:900].reshape(-1,3)@np.array([.2126,.7152,.0722])
 target=float(sys.argv[2]) if len(sys.argv)>2 else 0.9  # bright, clean white
 white=np.array([1.0,0.988,0.968])  # crisp white with a hint of warmth
-rel=np.clip(1+(np.clip(Ls/Lw,0.3,1.8)-1)*0.55,0.5,1.25)
+rel=np.clip(1+(np.clip(Ls/Lw,0.3,1.8)-1)*0.55,0.5,1.0)  # never brighter than the wall itself (no glowing strips)
 v=target*rel
 v=np.where(v>0.9,0.9+0.1*np.tanh((v-0.9)/0.1),v)  # soft roll-off, no blown-out patches
 painted=np.clip(white/white.mean()*v[...,None],0,1)
