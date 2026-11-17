@@ -88,6 +88,8 @@ python3 tools/build_images.py photos/enhanced
   painted.
 - **pool-deck:** rebuilt from the original export with `tools/clean_photo.py` (compression
   blocking smoothed, gentle contrast) instead of the polish pass, which made it look crunchy.
+- **pool-deck-tall:** the tall pool photo in the amenities section, built from the original
+  `03.jpg` with `tools/pool_tall.py` (cleaned, cropped, enlarged 2.5x, edge-only sharpening).
 - The duplicate bathroom photo (`bathroom-glass-shower`, same room as `bathroom-vanity`)
   was removed from the gallery.
 
