@@ -39,7 +39,6 @@ const PHOTOS = [
   { slug: "workspace",             cat: "living",    caption: "Workspace",                          w: 2560 },
   { slug: "laundry-room",          cat: "living",    caption: "Laundry room",                       w: 2560 },
   { slug: "bathroom-walk-in-shower",cat: "bathrooms",caption: "Bathroom",                           w: 2560 },
-  { slug: "bathroom-glass-shower", cat: "bathrooms", caption: "Bathroom",                           w: 2560 },
   { slug: "bathroom-shower",       cat: "bathrooms", caption: "Bathroom",                           w: 2560 },
   { slug: "bathroom-kids",         cat: "bathrooms", caption: "Bathroom",                           w: 2560 },
   { slug: "bathroom-vanity",       cat: "bathrooms", caption: "Bathroom",                           w: 2560 },

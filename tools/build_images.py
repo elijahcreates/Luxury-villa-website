@@ -45,7 +45,7 @@ SLUGS = {
     "20": "bathroom-shower",
     "21": "laundry-room",
     "22": "bedroom-white",
-    "23": "bathroom-glass-shower",
+    # "23" bathroom-glass-shower: same bathroom as 26, left out of the gallery
     "24": "bedroom-teal",
     "25": "bedroom-two-beds",
     "26": "bathroom-vanity",

@@ -48,6 +48,7 @@ assets/img/           responsive WebP + JPEG photos (metadata/GPS stripped)
 assets/favicon.svg
 tools/enhance.py      natural photo enhancement (global corrections only)
 tools/build_images.py resize/compress photos into assets/img
+tools/polish.py       second light polish pass (brighter midtones, vibrance, clarity)
 photo-review/         2 enhancement samples (before/after) for approval
 ```
 
@@ -61,7 +62,7 @@ photo-review/         2 enhancement samples (before/after) for approval
 
 ## Photos
 
-All 26 photos have been enhanced with `tools/enhance.py`: global, natural corrections
+All 25 photos have been enhanced with `tools/enhance.py`: global, natural corrections
 only (white balance, exposure, gentle contrast, light vibrance and clarity, chroma
 noise reduction, mild sharpening). Nothing is added, removed or reshaped. The 6
 lower-resolution images (about 1200px wide) are screenshots in the source folder; the
@@ -76,3 +77,17 @@ for f in photos/original/*.jpg; do
 done
 python3 tools/build_images.py photos/enhanced
 ```
+
+### Later edits
+
+- `tools/polish.py` was run on all web photos: a light, global brightness / vibrance /
+  clarity pass. Nothing added or removed.
+- **bedroom-twin-beds:** the mustard accent wall behind the bed was recoloured to white
+  because the owner is repainting it. Only the wall colour changed; the room's light and
+  shadow, furniture and decor are as photographed. Retake this photo once the wall is
+  painted.
+- The duplicate bathroom photo (`bathroom-glass-shower`, same room as `bathroom-vanity`)
+  was removed from the gallery.
+
+Re-running `tools/build_images.py` from the original files would undo these edits; run
+it, then repeat the polish and the wall recolour.
