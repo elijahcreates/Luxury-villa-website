@@ -88,8 +88,8 @@ python3 tools/build_images.py photos/enhanced
   painted.
 - **pool-deck:** rebuilt from the original export with `tools/clean_photo.py` (compression
   blocking smoothed, gentle contrast) instead of the polish pass, which made it look crunchy.
-- **pool-deck-tall:** the tall pool photo in the amenities section, built from the original
-  `03.jpg` with `tools/pool_tall.py` (cleaned, cropped, enlarged 2.5x, edge-only sharpening).
+- **pool-deck-tall:** the tall pool photo in the amenities section is a separate, higher-quality
+  image supplied later (1086x1448). `tools/pool_tall.py` is the older fallback built from `03.jpg`.
 - The duplicate bathroom photo (`bathroom-glass-shower`, same room as `bathroom-vanity`)
   was removed from the gallery.
 
@@ -100,4 +100,4 @@ it, then repeat the polish and the wall recolour.
 
 Browsers keep photos for a day (see `vercel.json`). When a photo changes, bump the
 version tag so visitors get the new file right away: `IMG_V` at the top of `js/main.js`
-and every `?v=` in `index.html` (find and replace `?v=6` with `?v=7`).
+and every `?v=` in `index.html` (find and replace `?v=7` with `?v=8`).
