@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+"""Recolour the mustard accent wall in bedroom-twin-beds to white (owner is repainting).
+Usage: python3 tools/recolor_wall.py DIR [brightness] [out.png]
+DIR must hold src.webp (the photo before the polish pass). Only mustard-coloured pixels
+inside the accent-wall area change; light and shadow are kept. Run tools/polish.py after."""
 import sys,numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 d=sys.argv[1]
