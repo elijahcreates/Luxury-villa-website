@@ -27,7 +27,7 @@ const PHOTOS = [
   { slug: "bunk-room",             cat: "bedrooms",  caption: "Kids' bunk room",                    w: 2560 },
   { slug: "bedroom-teal",          cat: "bedrooms",  caption: "Bedroom",                            w: 2560, size: "wide" },
   { slug: "pool-deck",             cat: "outdoor",   caption: "Pool deck & sun loungers",           w: 1206, size: "wide" },
-  { slug: "bathroom-double-vanity",cat: "bathrooms", caption: "Bathroom with double vanity & tub",  w: 1206, size: "wide" },
+  { slug: "bathroom-double-vanity",cat: "bathrooms", caption: "Bathroom with tub",                 w: 1206, size: "wide" },
   // ---- shown after "View all photos" ----
   { slug: "dining-living",         cat: "living",    caption: "Open-plan dining & living",          w: 2560, size: "wide" },
   { slug: "bedroom-twin-beds",     cat: "bedrooms",  caption: "Bedroom",                            w: 2560, size: "wide" },
