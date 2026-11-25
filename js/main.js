@@ -41,15 +41,15 @@ const PHOTOS = [
   { slug: "bathroom-walk-in-shower",cat: "bathrooms",caption: "Bathroom",                           w: 2560 },
   { slug: "bathroom-shower",       cat: "bathrooms", caption: "Bathroom",                           w: 2560 },
   { slug: "bathroom-kids",         cat: "bathrooms", caption: "Bathroom",                           w: 2560 },
-  { slug: "bathroom-vanity",       cat: "bathrooms", caption: "Bathroom",                           w: 2560 },
+  { slug: "bathroom-vanity",       cat: "bathrooms", caption: "Bathroom",                           w: 1448, ws: [640, 1024, 1448] },
 ];
 const INITIAL_COUNT = 4;
 const IMG = "assets/img/";
-const IMG_V = "?v=7"; // bump when photos change so browsers fetch the new files
+const IMG_V = "?v=8"; // bump when photos change so browsers fetch the new files
 
-const widthsFor = (w) => (w > 1206 ? [640, 1024, 1600, 2200] : [640, 1024, 1206]);
+const widthsFor = (p) => p.ws || (p.w > 1206 ? [640, 1024, 1600, 2200] : [640, 1024, 1206]);
 const srcset = (p, max = Infinity) =>
-  widthsFor(p.w).filter((x) => x <= max).map((x) => `${IMG}${p.slug}-${x}.webp${IMG_V} ${x}w`).join(", ");
+  widthsFor(p).filter((x) => x <= max).map((x) => `${IMG}${p.slug}-${x}.webp${IMG_V} ${x}w`).join(", ");
 
 document.documentElement.classList.add("js");
 
