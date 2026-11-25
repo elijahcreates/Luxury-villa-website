@@ -92,6 +92,8 @@ python3 tools/build_images.py photos/enhanced
   image supplied later (1086x1448). `tools/pool_tall.py` is the older fallback built from `03.jpg`.
 - **bathroom-vanity:** replaced with an AI-enhanced version supplied by the owner's side
   (1448x1086). Note it adds a plant and redraws some details; retake or revert if needed.
+- **pool-lanai:** enhanced version, centered on the back door, with the real cornhole boards
+  composited back in from the original photo.
 - The duplicate bathroom photo (`bathroom-glass-shower`, same room as `bathroom-vanity`)
   was removed from the gallery.
 
@@ -102,4 +104,4 @@ it, then repeat the polish and the wall recolour.
 
 Browsers keep photos for a day (see `vercel.json`). When a photo changes, bump the
 version tag so visitors get the new file right away: `IMG_V` at the top of `js/main.js`
-and every `?v=` in `index.html` (find and replace `?v=9` with `?v=10`).
+and every `?v=` in `index.html` (find and replace `?v=10` with `?v=11`).
