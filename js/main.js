@@ -38,10 +38,10 @@ const PHOTOS = [
   { slug: "sitting-area",          cat: "living",    caption: "Sitting area",                       w: 2560 },
   { slug: "workspace",             cat: "living",    caption: "Workspace",                          w: 2560 },
   { slug: "laundry-room",          cat: "living",    caption: "Laundry room",                       w: 2560 },
+  { slug: "bathroom-vanity",       cat: "bathrooms", caption: "Bathroom",                           w: 1448, ws: [640, 1024, 1448] },
   { slug: "bathroom-walk-in-shower",cat: "bathrooms",caption: "Bathroom",                           w: 2560 },
   { slug: "bathroom-shower",       cat: "bathrooms", caption: "Bathroom",                           w: 2560 },
   { slug: "bathroom-kids",         cat: "bathrooms", caption: "Bathroom",                           w: 2560 },
-  { slug: "bathroom-vanity",       cat: "bathrooms", caption: "Bathroom",                           w: 1448, ws: [640, 1024, 1448] },
 ];
 const INITIAL_COUNT = 4;
 const IMG = "assets/img/";
