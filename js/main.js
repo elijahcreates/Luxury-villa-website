@@ -35,7 +35,7 @@ const PHOTOS = [
   { slug: "bedroom-navy",          cat: "bedrooms",  caption: "Bedroom",                            w: 2560 },
   { slug: "bedroom-white",         cat: "bedrooms",  caption: "Bedroom",                            w: 2560 },
   { slug: "bedroom-two-beds",      cat: "bedrooms",  caption: "Bedroom",                            w: 1448, ws: [640, 1024, 1448] },
-  { slug: "sitting-area",          cat: "living",    caption: "Sitting area",                       w: 2560 },
+  { slug: "sitting-area",          cat: "living",    caption: "Sitting area",                       w: 1448, ws: [640, 1024, 1448] },
   { slug: "workspace",             cat: "living",    caption: "Workspace",                          w: 1448, ws: [640, 1024, 1448] },
   { slug: "laundry-room",          cat: "living",    caption: "Laundry room",                       w: 1109, ws: [640, 1024, 1109] },
   { slug: "bathroom-vanity",       cat: "bathrooms", caption: "Bathroom",                           w: 1448, ws: [640, 1024, 1448] },
@@ -45,7 +45,7 @@ const PHOTOS = [
 ];
 const INITIAL_COUNT = 4;
 const IMG = "assets/img/";
-const IMG_V = "?v=25"; // bump when photos change so browsers fetch the new files
+const IMG_V = "?v=26"; // bump when photos change so browsers fetch the new files
 
 const widthsFor = (p) => p.ws || (p.w > 1206 ? [640, 1024, 1600, 2200] : [640, 1024, 1206]);
 const srcset = (p, max = Infinity) =>
