@@ -40,12 +40,12 @@ const PHOTOS = [
   { slug: "laundry-room",          cat: "living",    caption: "Laundry room",                       w: 1109, ws: [640, 1024, 1109] },
   { slug: "bathroom-vanity",       cat: "bathrooms", caption: "Bathroom",                           w: 1448, ws: [640, 1024, 1448] },
   { slug: "bathroom-walk-in-shower",cat: "bathrooms",caption: "Bathroom",                           w: 1045, ws: [640, 1024, 1045] },
-  { slug: "bathroom-shower",       cat: "bathrooms", caption: "Bathroom",                           w: 2560 },
+  { slug: "bathroom-shower",       cat: "bathrooms", caption: "Bathroom",                           w: 1411, ws: [640, 1024, 1411] },
   { slug: "bathroom-kids",         cat: "bathrooms", caption: "Bathroom",                           w: 1134, ws: [640, 1024, 1134] },
 ];
 const INITIAL_COUNT = 4;
 const IMG = "assets/img/";
-const IMG_V = "?v=15"; // bump when photos change so browsers fetch the new files
+const IMG_V = "?v=16"; // bump when photos change so browsers fetch the new files
 
 const widthsFor = (p) => p.ws || (p.w > 1206 ? [640, 1024, 1600, 2200] : [640, 1024, 1206]);
 const srcset = (p, max = Infinity) =>
