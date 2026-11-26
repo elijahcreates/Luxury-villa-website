@@ -26,7 +26,7 @@ const PHOTOS = [
   { slug: "bedroom-patio",         cat: "bedrooms",  caption: "Bedroom with patio access",          w: 2560 },
   { slug: "bunk-room",             cat: "bedrooms",  caption: "Kids' bunk room",                    w: 2560 },
   { slug: "bedroom-teal",          cat: "bedrooms",  caption: "Bedroom",                            w: 2560, size: "wide" },
-  { slug: "pool-deck",             cat: "outdoor",   caption: "Pool deck & sun loungers",           w: 1206, size: "wide" },
+  { slug: "pool-deck-tall",        cat: "outdoor",   caption: "Pool deck, spa & sun loungers",     w: 1086, size: "tall", ws: [640, 1024, 1086] },
   { slug: "bathroom-double-vanity",cat: "bathrooms", caption: "Bathroom with double vanity & tub",  w: 1645, size: "wide", ws: [640, 1024, 1600, 1645] },
   // ---- shown after "View all photos" ----
   { slug: "dining-living",         cat: "living",    caption: "Open-plan dining & living",          w: 2560, size: "wide" },
@@ -41,7 +41,7 @@ const PHOTOS = [
   { slug: "bathroom-vanity",       cat: "bathrooms", caption: "Bathroom",                           w: 1448, ws: [640, 1024, 1448] },
   { slug: "bathroom-walk-in-shower",cat: "bathrooms",caption: "Bathroom",                           w: 1045, ws: [640, 1024, 1045] },
   { slug: "bathroom-shower",       cat: "bathrooms", caption: "Bathroom",                           w: 1411, ws: [640, 1024, 1411] },
-  { slug: "bathroom-kids",         cat: "bathrooms", caption: "Bathroom",                           w: 1134, ws: [640, 1024, 1134] },
+  { slug: "bathroom-kids",         cat: "bathrooms", caption: "Bathroom",                           w: 1134, size: "wide", ws: [640, 1024, 1134] },
 ];
 const INITIAL_COUNT = 4;
 const IMG = "assets/img/";
