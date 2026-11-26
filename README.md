@@ -82,7 +82,7 @@ python3 tools/build_images.py photos/enhanced
 
 - `tools/polish.py` was run on all web photos: a light, global brightness / vibrance /
   clarity pass. Nothing added or removed.
-- **bedroom-twin-beds:** the mustard accent wall behind the bed was recoloured to white
+- **bedroom-twin-beds:** now an AI-enhanced photo with the wall shown white (owner is repainting). Earlier note: the mustard accent wall behind the bed was recoloured to white
   because the owner is repainting it. Only the wall colour changed; the room's light and
   shadow, furniture and decor are as photographed. Retake this photo once the wall is
   painted.
@@ -104,4 +104,4 @@ it, then repeat the polish and the wall recolour.
 
 Browsers keep photos for a day (see `vercel.json`). When a photo changes, bump the
 version tag so visitors get the new file right away: `IMG_V` at the top of `js/main.js`
-and every `?v=` in `index.html` (find and replace `?v=18` with `?v=19`).
+and every `?v=` in `index.html` (find and replace `?v=19` with `?v=20`).
