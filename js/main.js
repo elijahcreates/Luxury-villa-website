@@ -27,7 +27,7 @@ const PHOTOS = [
   { slug: "bunk-room",             cat: "bedrooms",  caption: "Kids' bunk room",                    w: 2560 },
   { slug: "bedroom-teal",          cat: "bedrooms",  caption: "Bedroom",                            w: 2560, size: "wide" },
   { slug: "pool-deck",             cat: "outdoor",   caption: "Pool deck & sun loungers",           w: 1206, size: "wide" },
-  { slug: "bathroom-double-vanity",cat: "bathrooms", caption: "Bathroom with tub",                 w: 1206, size: "wide" },
+  { slug: "bathroom-double-vanity",cat: "bathrooms", caption: "Bathroom with double vanity & tub",  w: 1645, size: "wide", ws: [640, 1024, 1600, 1645] },
   // ---- shown after "View all photos" ----
   { slug: "dining-living",         cat: "living",    caption: "Open-plan dining & living",          w: 2560, size: "wide" },
   { slug: "bedroom-twin-beds",     cat: "bedrooms",  caption: "Bedroom",                            w: 2560, size: "wide" },
@@ -45,7 +45,7 @@ const PHOTOS = [
 ];
 const INITIAL_COUNT = 4;
 const IMG = "assets/img/";
-const IMG_V = "?v=17"; // bump when photos change so browsers fetch the new files
+const IMG_V = "?v=18"; // bump when photos change so browsers fetch the new files
 
 const widthsFor = (p) => p.ws || (p.w > 1206 ? [640, 1024, 1600, 2200] : [640, 1024, 1206]);
 const srcset = (p, max = Infinity) =>
