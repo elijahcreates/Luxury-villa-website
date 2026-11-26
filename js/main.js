@@ -16,7 +16,7 @@ const BOOKING_URL = "";
    size: "big" (2x2), "wide" (2x1), or "" (1x1)
    -------------------------------------------------------------------------- */
 const PHOTOS = [
-  { slug: "pool-lanai",            cat: "outdoor",   caption: "Private pool, spa & covered lanai",  w: 1485, size: "big", ws: [640, 1024, 1485] },
+  { slug: "pool-lanai",            cat: "outdoor",   caption: "Private pool, spa & covered lanai",  w: 1672, size: "big", ws: [640, 1024, 1672] },
   { slug: "exterior-front",        cat: "outdoor",   caption: "Welcome to the villa",               w: 1632, size: "wide", ws: [640, 1024, 1600, 1632] },
   { slug: "kitchen",               cat: "living",    caption: "Fully equipped kitchen",             w: 1634, ws: [640, 1024, 1600, 1634] },
   { slug: "home-theater",          cat: "fun",       caption: "Home theater",                       w: 1540, ws: [640, 1024, 1540] },
@@ -45,7 +45,7 @@ const PHOTOS = [
 ];
 const INITIAL_COUNT = 4;
 const IMG = "assets/img/";
-const IMG_V = "?v=35"; // bump when photos change so browsers fetch the new files
+const IMG_V = "?v=36"; // bump when photos change so browsers fetch the new files
 
 const widthsFor = (p) => p.ws || (p.w > 1206 ? [640, 1024, 1600, 2200] : [640, 1024, 1206]);
 const srcset = (p, max = Infinity) =>

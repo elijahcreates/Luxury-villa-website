@@ -104,4 +104,4 @@ it, then repeat the polish and the wall recolour.
 
 Browsers keep photos for a day (see `vercel.json`). When a photo changes, bump the
 version tag so visitors get the new file right away: `IMG_V` at the top of `js/main.js`
-and every `?v=` in `index.html` (find and replace `?v=35` with `?v=36`).
+and every `?v=` in `index.html` (find and replace `?v=36` with `?v=37`).
